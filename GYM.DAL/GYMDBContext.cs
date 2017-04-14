@@ -14,12 +14,15 @@ namespace GYM.DAL
         
         public DbSet<Users> User { get; set; }
 
+        public DbSet<SchemeMaster> SchemeMaster { get; set; }
+
 
         #region Model Building
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             new UserMap(builder.Entity<Users>());
+            new SchemeMasterMap(builder.Entity<SchemeMaster>());
         }
 
         #endregion

@@ -19,5 +19,11 @@ namespace GYM.DAL.Repository
         {
             return _context.User.ToList();
         }
+
+        public IEnumerable<SchemeMaster> GetSchemes()
+        {
+            return _context.SchemeMaster.ToList();
+            //throw new NotImplementedException();
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace GYM.DAL.Repository.Interfaces
     public interface IGYMRepository
     {
         List<Users> GetUsers();
+
+        IEnumerable<SchemeMaster> GetSchemes();
     }
 }
