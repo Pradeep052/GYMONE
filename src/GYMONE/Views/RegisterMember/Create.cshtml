@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+        debugger;
 
         $("#WorkouttypeID").change(function () {
             $("#PlantypeID").empty();
@@ -33,8 +33,9 @@
                     $("#PlantypeID").append('<option value="' + "0" + '">' + "Select" + '</option>');
 
                     $.each(plandata, function (i, plan) {
-                        $("#PlantypeID").append('<option value="' + plan.PlanID + '">' + plan.PlanName + '</option>');
+                        $("#PlantypeID").append('<option value="' + plan.planId + '">' + plan.planName + '</option>');
                     });
+                    
                 },
                 error: function (ex) {
                     alert('Failed to retrieve states.' + ex);
@@ -70,7 +71,7 @@
                     $("#PlantypeID").append('<option value="' + "0" + '">' + "Select" + '</option>');
 
                     $.each(plandata, function (i, plan) {
-                        $("#PlantypeID").append('<option value="' + plan.PlanID + '">' + plan.PlanName + '</option>');
+                        $("#PlantypeID").append('<option value="' + plan.planId + '">' + plan.planName + '</option>');
                     });
 
                     if ('@ViewData["SelectedPlan"]' != 0) {
@@ -238,7 +239,7 @@
                             @Html.DisplayNameFor(model => model.JoiningDate)
                         </div>
                         <div class="col-md-3">
-                            @Html.TextBoxFor(model => model.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            @Html.TextBoxFor(model => model.JoiningDate, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.JoiningDate)
                         </div>
                     </div>
@@ -249,14 +250,14 @@
                             @Html.DisplayNameFor(model => model.DOB)
                         </div>
                         <div class="col-md-3">
-                            @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = true })
+                            @Html.TextBoxFor(model => model.DOB, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.DOB)
                         </div>
                         <div class="col-md-3">
                             @Html.DisplayNameFor(model => model.Age)
                         </div>
                         <div class="col-md-3">
-                            @Html.TextBoxFor(model => model.Age, new { @class = "form-control", @readonly = true })
+                            @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Age)
                         </div>
 
@@ -267,8 +268,8 @@
                             @Html.DisplayNameFor(model => model.Gender)
                         </div>
                         <div class="col-md-3">
-                            @*@Html.DropDownListFor(model => model.Gender, new SelectList(Model.Listgender, "Value", "Text"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Gender)*@
+                            @Html.DropDownListFor(model => model.Gender, new SelectList(Model.Listgender, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Gender)
                         </div>
 
                         <div class="col-md-3">
@@ -295,6 +296,8 @@
                         </div>
                         <div class="col-md-3">
                             @Html.DropDownList("PlantypeID", new SelectList(string.Empty, "PlanID", "PlanName"), "Select", new { @class = "form-control" })
+                            @*@Html.DropDownListFor(m => m.PlantypeID, new SelectList(Model.ListPlan, "PlanID", "PlanName"),
+                                new { @class = "form-control" })*@
                             @Html.ValidationMessageFor(model => model.PlantypeID)
                         </div>
                     </div>
@@ -355,19 +358,26 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () { rebindPlan(); });
+    //$(document).ready(function () { rebindPlan(); });
 </script>
 @section Scripts {
 
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#JoiningDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'yy-mm-dd'
+        $(document).ready(function () {           
+
+            $('#JoiningDate').datetimepicker({
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
             });
+
         });
     </script>
 
@@ -375,28 +385,35 @@
 
 
         var d = new Date();
-        $('#DOB').datepicker({
+        $('#DOB').datetimepicker({
 
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
 
-            changeMonth: true,
-            changeYear: true,
-            changeday: true,
-            dateFormat: "yy-mm-dd",
-            yearRange: "1980:2015",
-            onSelect: function (selectedDate, ev) {
-                CalculateAge(selectedDate);
-            }
         });
 
+        $("#DOB").on("changeDate", function (e) {            
+            var today = new Date();
+            var dob = new Date(e.date);            
+            age = new Date(today - dob).getFullYear() - 1970;            
+            $('#Age').val(age);
+        });
 
     </script>
 
     <script type="text/javascript">
         function CalculateAge(selectedDate) {
-
-            var x = selectedDate.split('-');
+            var date = selectedDate;
+            var x = date.split('-');
             var curYear = new Date().getUTCFullYear();
             var age = curYear - x[0];
+            alert(age);
             $('#Age').val(age);
         }
 

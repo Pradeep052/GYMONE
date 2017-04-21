@@ -21,7 +21,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "GYM.DAL": "1.0.0-*"
+    "GYM.DAL": "1.0.0-*",
+    "Bootstrap.v3.Datetimepicker": "4.17.45"
   },
 
   "tools": {

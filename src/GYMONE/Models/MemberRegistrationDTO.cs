@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,7 @@ namespace GYMONE.Models
         [Required(ErrorMessage = "Please enter Middle Name")]
         public string MemberMName { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Birth Date")]
         [Required(ErrorMessage = "Please select Birth Date")]
         public DateTime? DOB { get; set; }
@@ -61,7 +62,7 @@ namespace GYMONE.Models
 
         [DisplayName("Joining Date")]
         [Required(ErrorMessage = "Please select Joining Date")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime? JoiningDate { get; set; }
 
         [Required(ErrorMessage = "Please enter Address")]
@@ -72,10 +73,10 @@ namespace GYMONE.Models
 
         [NotMapped]
         public IEnumerable<SchemeMasterDTO> ListScheme { get; set; }
-        //[NotMapped]
-        //public IEnumerable<PlanMasterDTO> ListPlan { get; set; }
-        //[NotMapped]
-        //public IEnumerable<SelectListItem> Listgender { get; set; }
+        [NotMapped]
+        public IEnumerable<PlanMasterDTO> ListPlan { get; set; }
+        [NotMapped]
+        public IEnumerable<SelectListItem> Listgender { get; set; }
 
         [NotMapped]
         public string FullName { get; set; }

@@ -16,6 +16,11 @@ namespace GYM.DAL
 
         public DbSet<SchemeMaster> SchemeMaster { get; set; }
 
+        public DbSet<PlanMaster> PlanMaster { get; set; }
+
+        public DbSet<MemberRegistration> MemberRegistration { get; set; }
+
+        //public DbSet<PlanDrop> PlanDrop { get; set; }
 
         #region Model Building
         protected override void OnModelCreating(ModelBuilder builder)
@@ -23,6 +28,8 @@ namespace GYM.DAL
             base.OnModelCreating(builder);
             new UserMap(builder.Entity<Users>());
             new SchemeMasterMap(builder.Entity<SchemeMaster>());
+            new PlanMasterMap(builder.Entity<PlanMaster>());
+            new MemberRegistrationMap(builder.Entity<MemberRegistration>());
         }
 
         #endregion

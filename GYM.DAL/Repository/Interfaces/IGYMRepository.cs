@@ -11,5 +11,16 @@ namespace GYM.DAL.Repository.Interfaces
         List<Users> GetUsers();
 
         IEnumerable<SchemeMaster> GetSchemes();
+
+        IEnumerable<PlanMaster> GetPlan();
+
+        IEnumerable<PlanMaster> GetPlanByWorkTypeID(string SchemeID);
+
+        string GetAmount(string MemID, string WorkTypeID);
+
+        int InsertMember(MemberRegistration objMRDTO);
+
+        IEnumerable<MemberRegistration> GetMember();
+
     }
 }

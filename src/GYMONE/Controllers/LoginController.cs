@@ -2,6 +2,7 @@
 using GYMONE.Models;
 using GYM.DAL.Repository.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,23 +22,34 @@ namespace GYMONE.Controllers
             return View();
         }
 
-        public IActionResult Login(LoginModel login)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(LoginModel obj, FormCollection frm)
         {
-            if(ModelState.IsValid)
+            if (string.IsNullOrEmpty(obj.Username))
+            {
+                ModelState.AddModelError("Error", "Please enter Username");
+            }
+            //else if (string.IsNullOrEmpty(obj.Password))
+            //{
+            //    ModelState.AddModelError("Error", "Please enter Password");
+            //}
+           else
             {
                 var users = _gymRepository.GetUsers();
-                if (users.Any(u => u.EmailID == login.Username))
+                if (users.Any(u => u.EmailID == obj.Username))
                 {
                     return RedirectToAction("UserDashboard", "Dashboard");
                 }
                 else
                 {
-                    TempData["ValidationMessage"] = "Please enter valid Username and Password";
-                    return View(login);
+                    ModelState.AddModelError("Error", "Please enter valid Username and Password");
+                    //TempData["ValidationMessage"] = "Please enter valid Username and Password";
+                    return View();
                 }
             }
 
-            return View(login);
+            return View();
         }
     }
 }
